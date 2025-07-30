@@ -1,1 +1,6 @@
-// Flows will be imported for their side effects in this file.
+import { config } from 'dotenv';
+config();
+
+import '@/ai/flows/improve-content-visibility.ts';
+import '@/ai/flows/optimize-content-citations.ts';
+import '@/ai/flows/discover-trending-queries.ts';
