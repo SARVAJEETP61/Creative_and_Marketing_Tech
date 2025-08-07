@@ -12,14 +12,14 @@ export default function Header() {
             <span className="font-bold font-headline">AI Visibility Engine</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-            <Link href="#what-we-do" className="transition-colors hover:text-foreground/80 text-foreground/60">What We Do</Link>
-            <Link href="#use-case" className="transition-colors hover:text-foreground/80 text-foreground/60">Use Case</Link>
-            <Link href="#why-us" className="transition-colors hover:text-foreground/80 text-foreground/60">Why Us</Link>
+            <Link href="/#what-we-do" className="transition-colors hover:text-foreground/80 text-foreground/60">What We Do</Link>
+            <Link href="/#use-case" className="transition-colors hover:text-foreground/80 text-foreground/60">Use Case</Link>
+            <Link href="/#why-us" className="transition-colors hover:text-foreground/80 text-foreground/60">Why Us</Link>
           </nav>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-4">
           <Button asChild style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))' }} className="hover:opacity-90">
-            <Link href="#">Start Creating</Link>
+            <Link href="/generate">Start Creating</Link>
           </Button>
         </div>
       </div>
