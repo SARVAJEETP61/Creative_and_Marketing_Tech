@@ -25,24 +25,15 @@ import { Textarea } from '@/components/ui/textarea';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Switch } from '@/components/ui/switch';
 import { useState } from 'react';
-import { generateBrandContent, GenerateBrandContentOutput } from '@/ai/flows/generate-brand-content';
+import { generateBrandContent } from '@/ai/flows/generate-brand-content';
+import { GenerateBrandContentOutput, GenerateBrandContentInputSchema } from '@/ai/schemas/generate-brand-content';
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Clipboard, Download, RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { Toaster } from '../ui/toaster';
 
-const formSchema = z.object({
-  brandName: z.string().min(1, 'Brand name is required.'),
-  brandTone: z.enum(['Witty', 'Professional', 'Friendly']),
-  contentType: z.enum(['Instagram Caption', 'Blog Post', 'Ad Copy']),
-  campaignGoal: z.string().optional(),
-  keywords: z.string().optional(),
-  contentLength: z.enum(['Short', 'Medium', 'Long']),
-  enableGenAIStructure: z.boolean(),
-  simulatePrompt: z.boolean(),
-});
 
-type FormValues = z.infer<typeof formSchema>;
+type FormValues = z.infer<typeof GenerateBrandContentInputSchema>;
 
 export default function GenerateContentForm() {
   const [generatedContent, setGeneratedContent] = useState<GenerateBrandContentOutput | null>(null);
@@ -50,7 +41,7 @@ export default function GenerateContentForm() {
   const [lastRequest, setLastRequest] = useState<FormValues | null>(null);
 
   const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(GenerateBrandContentInputSchema),
     defaultValues: {
       brandName: '',
       brandTone: 'Friendly',
