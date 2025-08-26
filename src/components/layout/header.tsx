@@ -9,7 +9,7 @@ export default function Header() {
         <div className="mr-4 flex items-center">
           <Link href="/" className="mr-6 flex items-center space-x-2">
             <Bot className="h-6 w-6 text-primary" />
-            <span className="font-bold font-headline">AI Visibility Engine</span>
+            <span className="font-bold font-headline">AI for Marketing</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
             <Link href="/#what-we-do" className="transition-colors hover:text-foreground/80 text-foreground/60">What We Do</Link>

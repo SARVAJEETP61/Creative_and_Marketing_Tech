@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'AI Visibility Engine',
+  title: 'AI for Marketing',
   description: 'Marketing That Shows Up in AI — Not Just Google',
 };
 
