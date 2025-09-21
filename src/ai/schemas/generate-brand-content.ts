@@ -1,28 +1,18 @@
-/**
- * @fileOverview This file defines the Zod schemas and TypeScript types for the 'generateBrandContent' flow.
- *
- * - `GenerateBrandContentInputSchema`: The Zod schema for the input of the `generateBrandContent` function.
- * - `GenerateBrandContentInput`: The TypeScript type inferred from the input schema.
- * - `GenerateBrandContentOutputSchema`: The Zod schema for the output of the `generateBrandContent` function.
- * - `GenerateBrandContentOutput`: The TypeScript type inferred from the output schema.
- */
-
-import { z } from 'zod';
+import { z } from "zod";
 
 export const GenerateBrandContentInputSchema = z.object({
-  brandName: z.string().describe('The name of the brand.'),
-  brandTone: z.enum(['Witty', 'Professional', 'Friendly']).describe('The desired tone for the content.'),
-  contentType: z.enum(['Instagram Caption', 'Blog Post', 'Ad Copy']).describe('The type of content to generate.'),
-  campaignGoal: z.string().optional().describe('The optional campaign objective.'),
-  keywords: z.string().optional().describe('Optional comma-separated keywords or hashtags.'),
-  contentLength: z.enum(['Short', 'Medium', 'Long']).describe('The desired length of the content.'),
-  enableGenAIStructure: z.boolean().describe('Whether to optimize the structure for GenAI visibility.'),
-  simulatePrompt: z.boolean().describe('Whether to simulate how the content might appear in an AI prompt response.'),
+  // Use Option A (trim + min). If your Zod doesn't support .trim(), swap to Option B above.
+  brandName: z.string().trim().min(1, "Brand name is required"),
+  brandTone: z.enum(["Witty", "Professional", "Friendly"]),
+  contentType: z.enum(["Instagram Caption", "Blog Post", "Ad Copy"]),
+  campaignGoal: z.string().optional(),
+  keywords: z.string().optional(),
+  contentLength: z.enum(["Short", "Medium", "Long"]),
 });
+
 export type GenerateBrandContentInput = z.infer<typeof GenerateBrandContentInputSchema>;
 
 export const GenerateBrandContentOutputSchema = z.object({
-  content: z.string().describe('The generated brand content.'),
-  promptSimulation: z.string().optional().describe('A simulation of the content within an AI prompt response.'),
+  content: z.string(),
 });
 export type GenerateBrandContentOutput = z.infer<typeof GenerateBrandContentOutputSchema>;
