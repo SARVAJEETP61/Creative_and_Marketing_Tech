@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { Button } from '@/components/ui/button';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,52 +12,49 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Switch } from '@/components/ui/switch';
-import { useState } from 'react';
-import { generateBrandContent } from '@/ai/flows/generate-brand-content';
-import { GenerateBrandContentOutput, GenerateBrandContentInputSchema } from '@/ai/schemas/generate-brand-content';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
-import { Clipboard, Download, RefreshCw } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
-import { Toaster } from '../ui/toaster';
-
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useState } from "react";
+import { generateBrandContent } from "@/ai/flows/generate-brand-content";
+import {
+  GenerateBrandContentOutput,
+  GenerateBrandContentInputSchema,
+} from "@/ai/schemas/generate-brand-content";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { toast } from "@/hooks/use-toast";
+import { Toaster } from "../ui/toaster";
 
 type FormValues = z.infer<typeof GenerateBrandContentInputSchema>;
 
 export default function GenerateContentForm() {
-  const [generatedContent, setGeneratedContent] = useState<GenerateBrandContentOutput | null>(null);
+  const [generatedContent, setGeneratedContent] =
+    useState<GenerateBrandContentOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [lastRequest, setLastRequest] = useState<FormValues | null>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(GenerateBrandContentInputSchema),
     defaultValues: {
-      brandName: '',
-      brandTone: 'Friendly',
-      contentType: 'Instagram Caption',
-      campaignGoal: '',
-      keywords: '',
-      contentLength: 'Medium',
-      enableGenAIStructure: true,
-      simulatePrompt: false,
+      brandName: "",
+      brandTone: "Friendly",
+      contentType: "Instagram Caption",
+      campaignGoal: "",
+      keywords: "",
+      contentLength: "Medium",
     },
   });
 
   async function onSubmit(values: FormValues) {
     setIsLoading(true);
     setGeneratedContent(null);
-    setLastRequest(values);
     try {
       const result = await generateBrandContent(values);
       setGeneratedContent(result);
@@ -72,34 +69,6 @@ export default function GenerateContentForm() {
       setIsLoading(false);
     }
   }
-
-  async function handleRegenerate() {
-    if (lastRequest) {
-      await onSubmit(lastRequest);
-    }
-  }
-
-  function copyToClipboard() {
-    if (generatedContent?.content) {
-      navigator.clipboard.writeText(generatedContent.content);
-      toast({ title: 'Copied to clipboard!' });
-    }
-  }
-
-  function downloadAsTxt() {
-    if (generatedContent?.content) {
-      const blob = new Blob([generatedContent.content], { type: 'text/plain' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `${form.getValues('brandName')}-${form.getValues('contentType')}.txt`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
-  }
-
 
   return (
     <>
@@ -127,7 +96,10 @@ export default function GenerateContentForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Brand Voice / Tone</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a tone" />
@@ -149,14 +121,19 @@ export default function GenerateContentForm() {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Content Type</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select a content type" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="Instagram Caption">Instagram Caption</SelectItem>
+                      <SelectItem value="Instagram Caption">
+                        Instagram Caption
+                      </SelectItem>
                       <SelectItem value="Blog Post">Blog Post</SelectItem>
                       <SelectItem value="Ad Copy">Ad Copy</SelectItem>
                     </SelectContent>
@@ -174,7 +151,10 @@ export default function GenerateContentForm() {
               <FormItem>
                 <FormLabel>Campaign Objective (Optional)</FormLabel>
                 <FormControl>
-                  <Textarea placeholder="e.g., Announce a new product launch" {...field} />
+                  <Textarea
+                    placeholder="e.g., Announce a new product launch"
+                    {...field}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -188,9 +168,14 @@ export default function GenerateContentForm() {
               <FormItem>
                 <FormLabel>Keywords or Hashtags (Optional)</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g., running, marathon, fitness" {...field} />
+                  <Input
+                    placeholder="e.g., running, marathon, fitness"
+                    {...field}
+                  />
                 </FormControl>
-                <FormDescription>Comma-separated keywords or hashtags.</FormDescription>
+                <FormDescription>
+                  Comma-separated keywords or hashtags.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -233,41 +218,17 @@ export default function GenerateContentForm() {
             )}
           />
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <FormField
-              control={form.control}
-              name="enableGenAIStructure"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel>GenAI Optimisation</FormLabel>
-                    <FormDescription>Structure the output for better AI visibility.</FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="simulatePrompt"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel>Prompt Simulation</FormLabel>
-                    <FormDescription>Show how the content might appear in an AI response.</FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <Button type="submit" disabled={isLoading} size="lg" className="w-full" style={{ backgroundColor: 'hsl(var(--accent))', color: 'hsl(var(--accent-foreground))' }}>
-            {isLoading ? 'Generating...' : 'Generate Content'}
+          <Button
+            type="submit"
+            disabled={isLoading}
+            size="lg"
+            className="w-full"
+            style={{
+              backgroundColor: "hsl(var(--accent))",
+              color: "hsl(var(--accent-foreground))",
+            }}
+          >
+            {isLoading ? "Generating..." : "Generate Content"}
           </Button>
         </form>
       </Form>
@@ -276,30 +237,16 @@ export default function GenerateContentForm() {
 
       {generatedContent && (
         <div className="mt-12 space-y-8">
-            <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                    <CardTitle>Generated Content</CardTitle>
-                    <div className="flex items-center gap-2">
-                         <Button variant="ghost" size="icon" onClick={copyToClipboard}><Clipboard /></Button>
-                         <Button variant="ghost" size="icon" onClick={downloadAsTxt}><Download /></Button>
-                         <Button variant="ghost" size="icon" onClick={handleRegenerate}><RefreshCw /></Button>
-                    </div>
-                </CardHeader>
-                <CardContent>
-                    <p className="whitespace-pre-wrap">{generatedContent.content}</p>
-                </CardContent>
-            </Card>
-
-            {generatedContent.promptSimulation && (
-                 <Card>
-                    <CardHeader>
-                        <CardTitle>Prompt Simulation</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <p className="whitespace-pre-wrap">{generatedContent.promptSimulation}</p>
-                    </CardContent>
-                </Card>
-            )}
+          <Card>
+            <CardHeader>
+              <CardTitle>Generated Content</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="whitespace-pre-wrap">
+                {generatedContent.content}
+              </p>
+            </CardContent>
+          </Card>
         </div>
       )}
     </>
