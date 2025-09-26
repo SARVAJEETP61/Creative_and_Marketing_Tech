@@ -66,20 +66,19 @@ Make sure you have installed:
    git clone https://github.com/InnovAIte-Deakin/Creative_and_Marketing_Tech.git
    cd Creative_and_Marketing_Tech
 
-
-Install dependencies:
+# Install dependencies:
 npm install
 or
 yarn install
 
-Running Locally
+# Running Locally
 npm run dev
 or
 yarn dev
 This should start the app on http://localhost:3000 (or whatever port Next.js configures).
 
 
-Configuration
+### Configuration
 next.config.ts: Next.js configuration file. 
 
 tailwind.config.ts: Tailwind CSS config. 
@@ -91,7 +90,7 @@ Firebase setup: check under firebase folder for backend config and setup.
 Add your own .env.local (or appropriate) file if you use environment variables (e.g. for API keys, Firebase credentials).
 
 
-Deployment
+### Deployment
 
 Ensure build works using
 npm run build
@@ -100,7 +99,7 @@ Deploy to your chosen host
 Use apphosting.yaml (present in the repo) if you're deploying to Google App Engine or a similar environment. 
 
 
-Project Structure
+### Project Structure
 Here’s a high-level view of the folder structure:
 
 Creative_and_Marketing_Tech/
@@ -115,7 +114,7 @@ Creative_and_Marketing_Tech/
 └── README.md                 → Project overview and setup (this file)
 
 
-Contributing
+### Contributing
 Feel free to contribute! Some suggested workflow:
 1. Fork the repo
 2. Create a feature branch (git checkout -b feature/your-feature)
