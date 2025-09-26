@@ -69,12 +69,12 @@ Make sure you have installed:
 
 Install dependencies:
 npm install
-# or
+or
 yarn install
 
 Running Locally
 npm run dev
-# or
+or
 yarn dev
 This should start the app on http://localhost:3000 (or whatever port Next.js configures).
 
